@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Greeno</title>
+    <style>
+        body {
+            font-family: "Comic Sans MS", "Comic Sans", cursive;
+            background-color: #121212;
+            color: #e0e0e0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        #logo {
+            width: 200px;
+            height: auto;
+            margin-bottom: 30px;
+        }
+
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            margin: 10px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #1e88e5;
+            color: #fff;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #1565c0;
+        }
+
+        .result {
+            color: #fff;
+            padding: 5px;
+            margin-top: 5px;
+        }
+
+        footer {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img id="logo" src="https://i.imgur.com/jQT1giS.png" alt="Greeno Logo">
+        <h1>Greeno Search</h1>
+        <input type="text" id="search" placeholder="Search the site or the web...">
+        <button onclick="performWebSearch()">Search Web</button>
+        <div id="results"></div>
+        <footer>
+            &copy; 2024 Greeno. All rights reserved.
+        </footer>
+    </div>
+
+    <script>
+        const index = [
+            { title: "Greeno Search", content: "This is the search engine homepage." },
+            { title: "About Greeno", content: "Greeno is an awesome search engine." },
+            { title: "Contact Greeno", content: "You can contact Greeno via email." }
+        ];
+
+        function searchQuery(query) {
+            return index.filter(item => item.title.toLowerCase().includes(query.toLowerCase()) || item.content.toLowerCase().includes(query.toLowerCase()));
+        }
+
+        document.getElementById('search').addEventListener('input', function() {
+            const query = this.value.trim();
+            if (query) {
+                const results = searchQuery(query);
+                displayResults(results);
+            } else {
+                document.getElementById('results').innerHTML = '';
+            }
+        });
+
+        function displayResults(results) {
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+            if (results.length === 0) {
+                resultsDiv.innerHTML = '<p>No results found.</p>';
+            } else {
+                results.forEach(result => {
+                    resultsDiv.innerHTML += `<div class="result"><strong>${result.title}</strong><p>${result.content}</p></div>`;
+                });
+            }
+        }
+
+        function performWebSearch() {
+            const query = document.getElementById('search').value.trim();
+            if (query) {
+                const searchUrl = `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+                window.open(searchUrl, '_blank');
+            } else {
+                alert('Please enter a search term for the web.');
+            }
+        }
+    </script>
+
+</body>
+</html>
